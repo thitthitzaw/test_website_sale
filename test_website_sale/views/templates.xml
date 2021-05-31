@@ -1,0 +1,121 @@
+<odoo>
+    <data>
+        <template id="portal_my_quotations_ept" inherit_id="sale.portal_my_quotations">
+            <xpath expr="//t[@t-foreach='quotations']" position="before">
+                <div class="container">
+                <div>
+                    <a t-attf-href="/my/quotes/create" class="btn btn-primary btn-sm">
+                        <i class="fas fa-plus-circle">Create Order</i>           
+                    </a>
+                </div>
+                </div>
+            </xpath>
+        </template>
+
+        <!-- <template id="order_create_form" name="Sale Order Form" inherit_id="portal.portal_sidebar" primary="True">
+        <xpath expr="//div[hasclass('o_portal_sidebar')]" position="inside">
+            <div class="container mt32">
+                <t t-if="submitted">
+                    <h3 class="alert alert-success mt16 mb16">
+                        <i class="fa fa-thumbs-up"/>
+                        Order submitted successfully
+                    </h3>
+                </t>
+            
+                <div class="row mt16 o_portal_nypl_sale_create">
+                    <div class="col-8">
+                        <form method="post">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <div class="form-group">
+                                <group>
+                                    <group>
+                                        <label>Customer	</label>
+                                        <select class="form-control" name="partner_id">
+                                            <t t-foreach="partner_ids" t-as="partner_id">
+                                                <option t-att-value="partner_id.id">
+                                                    <t t-esc="partner_id.name"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </group>
+                                    <group>
+                                        <label>PriceList</label>
+                                        <select class="form-control" name="pricelist_id">
+                                            <t t-foreach="pricelists" t-as="pricelist">
+                                                <option t-att-value="pricelist.id">
+                                                    <t t-esc="pricelist.name"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </group>
+                                </group>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template> -->
+
+    <template id="test_order_create_form" name="Sale Order Form">
+        <t t-call="portal.portal_layout">
+            <div class="container mt32">
+                <t t-if="submitted">
+                    <h3 class="alert alert-success mt16 mb16">
+                        <i class="fa fa-thumbs-up"/>
+                        Order submitted successfully
+                    </h3>
+                </t>
+            
+                <div class="row mt16 o_portal_nypl_sale_create">
+                    <div class="col-8">
+                        <form method="post">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <div class="form-group">
+                                <group>
+                                    <group>
+                                        <label>Customer	</label>
+                                        <select class="form-control" name="partner_id">
+                                            <t t-foreach="partner_ids" t-as="partner_id">
+                                                <option t-att-value="partner_id.id" t-att-property_product_pricelist="partner_id.property_product_pricelist.id">
+                                                    <t t-esc="partner_id.name"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </group>
+                                    <group>
+                                        <label>PriceList</label>
+                                        <select class="form-control" name="pricelist_id">
+                                            <t t-foreach="pricelists" t-as="pricelist">
+                                                <option t-att-value="pricelist.id">
+                                                    <t t-esc="pricelist.name"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </group>
+                                </group>
+                            </div>
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Description</th>
+                                        <th>Quantity</th>
+                                        <th>UOM</th>
+                                        <th>Unit Price</th>
+                                        <th>Taxes</th>
+                                        <th>Disc %</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    </data>
+</odoo>
