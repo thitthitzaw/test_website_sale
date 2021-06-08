@@ -29,5 +29,6 @@ class CustomerPortal(CustomerPortal):
             'pricelists':request.env['product.pricelist'].search([]),
             'partner_ids':request.env['res.partner'].search([]),
             'order_lines':request.env['sale.order.line'].search([]),
+            'product_id':request.env['product.product'].search([]),
             'submitted': post.get('submitted', False)
         })

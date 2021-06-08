@@ -78,7 +78,7 @@
                                         <label>Customer	</label>
                                         <select class="form-control" name="partner_id">
                                             <t t-foreach="partner_ids" t-as="partner_id">
-                                                <option t-att-value="partner_id.id" t-att-property_product_pricelist="partner_id.property_product_pricelist.id">
+                                                <option t-att-value="partner_id.id" t-att-property_product_pricelist="partner_id.property_product_pricelist.id" t-att-portal_pricelists="partner_id.portal_pricelists.ids">
                                                     <t t-esc="partner_id.name"/>
                                                 </option>
                                             </t>
@@ -96,9 +96,9 @@
                                     </group>
                                 </group>
                             </div>
-                            <table class="table table-bordered">
-                                <tbody>
-                                    <tr>
+                            <table class="table table-bordered w-auto o_portal_nypl_sale_create_table">
+                                <tbody class="o_portal_nypl_sale_create_tbody">
+                                    <tr class="o_portal_nypl_sale_create_tr">
                                         <th>Product</th>
                                         <th>Description</th>
                                         <th>Quantity</th>
@@ -107,6 +107,10 @@
                                         <th>Taxes</th>
                                         <th>Disc %</th>
                                         <th>Subtotal</th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan='9'><a href="#" role="button" name='portal_sale_create_line'>Add a product</a></td>
                                     </tr>
                                 </tbody>
                             </table>

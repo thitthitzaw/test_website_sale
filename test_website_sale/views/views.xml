@@ -6,4 +6,17 @@
           </xpath>
       </template>
   </data>
+    <data>
+        <record id="view_res_partner_inherit_form" model="ir.ui.view">
+            <field name="model">res.partner</field>
+            <field name="priority" eval="1"/>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="ref" position="after">
+                    <field name="portal_pricelists" widget="many2many_tags"/>
+                </field>
+            </field>
+        </record>
+    </data>
+
 </odoo>
