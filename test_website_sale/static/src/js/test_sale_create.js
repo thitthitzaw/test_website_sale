@@ -62,6 +62,7 @@ odoo.define('test_website_sale.PortalSaleCreate', function (require) {
                 // add option to nb to toggle the option 
                 var nb = $displayedpricelist.appendTo(this.$price_list).show().length;
                 this.$price_list.parent().toggle(nb >= 1);
+                this._onPricelistChange();
             },
         
             //--------------------------------------------------------------------------
@@ -82,8 +83,7 @@ odoo.define('test_website_sale.PortalSaleCreate', function (require) {
                 var self = this;
                 var $pricelist = this.$('select[name="pricelist_id"]');
                 var pricelistID = ($pricelist.val() || 0);
-                self.$productOptions.detach();
-                // testing promise
+                
                 var prom = Promise.resolve();
                 prom = this._rpc({
                     route: '/my/quotes/create/'+pricelistID,
@@ -91,11 +91,11 @@ odoo.define('test_website_sale.PortalSaleCreate', function (require) {
                     self.myValueFromRpc = result;
                 });
                 Promise.resolve(prom).then(function() {
+                    self.$product_list.find('option').remove();
                     self.myValueFromRpc.forEach(element => {
                         self.$product_list.append(new Option(element['name'],element['id']))
                     });
-                    var $displayedproductlist = self.$product_list.children()
-                    var nb = $displayedproductlist.appendTo(self.$product_list).show().length;
+                    var nb = self.myValueFromRpc.length
                     self.$product_list.parent().toggle(nb >= 1);
                 });
             },
