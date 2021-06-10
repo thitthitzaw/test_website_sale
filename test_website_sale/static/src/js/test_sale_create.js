@@ -3,12 +3,14 @@ odoo.define('test_website_sale.PortalSaleCreate', function (require) {
         
     var publicWidget = require('web.public.widget');
     var rpc = require('web.rpc');
+    var ajax = require('web.ajax');
     
         
     publicWidget.registry.PortalSaleCreate = publicWidget.Widget.extend({
         selector: '.o_portal_nypl_sale_create',
         events: {
             'change select[name="partner_id"]': '_onPartnerChange',
+            'change select[name="pricelist_id"]': '_onPricelistChange',
             'click a[name="portal_sale_create_line"]': '_addNewPortalOrderLine'
         },
         
@@ -20,6 +22,8 @@ odoo.define('test_website_sale.PortalSaleCreate', function (require) {
             var def = this._super.apply(this, arguments);
             this.$price_list = this.$('select[name="pricelist_id"]');
             this.$pricelistOptions = this.$price_list.find('option');
+            this.$product_list = this.$('select[name="product_ids"]');
+            this.$productOptions = this.$product_list.find('option');
             // this._changepricelist();
             return def;
         },
@@ -69,6 +73,31 @@ odoo.define('test_website_sale.PortalSaleCreate', function (require) {
              */
             _onPartnerChange: function () {
                 this._changepricelist();
+            },
+
+            /**
+             * @private
+             */
+            _onPricelistChange: function () {
+                var self = this;
+                var $pricelist = this.$('select[name="pricelist_id"]');
+                var pricelistID = ($pricelist.val() || 0);
+                self.$productOptions.detach();
+                // testing promise
+                var prom = Promise.resolve();
+                prom = this._rpc({
+                    route: '/my/quotes/create/'+pricelistID,
+                }).then(function (result) {
+                    self.myValueFromRpc = result;
+                });
+                Promise.resolve(prom).then(function() {
+                    self.myValueFromRpc.forEach(element => {
+                        self.$product_list.append(new Option(element['name'],element['id']))
+                    });
+                    var $displayedproductlist = self.$product_list.children()
+                    var nb = $displayedproductlist.appendTo(self.$product_list).show().length;
+                    self.$product_list.parent().toggle(nb >= 1);
+                });
             },
 
             /**

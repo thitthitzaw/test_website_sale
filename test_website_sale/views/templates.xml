@@ -94,6 +94,16 @@
                                             </t>
                                         </select>
                                     </group>
+                                    <group>
+                                        <label>Service Product</label>
+                                        <select class="form-control" name="product_ids">
+                                            <t t-foreach="product_ids" t-as="product">
+                                                <option t-att-value="product.id">
+                                                    <t t-esc="product.name"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </group>
                                 </group>
                             </div>
                             <table class="table table-bordered w-auto o_portal_nypl_sale_create_table">

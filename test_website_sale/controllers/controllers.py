@@ -12,6 +12,13 @@ from odoo.osv import expression
 
 class CustomerPortal(CustomerPortal):
 
+    @http.route('/my/quotes/create/<int:pricelist>', type='json', auth='public')
+    def get_pricelist_product(self,pricelist):
+        pricelists = request.env['product.pricelist'].search([('id','=',pricelist)])
+        if pricelists:
+            product_tmpl_ids = pricelists.mapped('item_ids').mapped('product_tmpl_id')
+            return request.env['product.product'].search_read([('product_tmpl_id','in',product_tmpl_ids.ids)],fields=['id','name'])
+
     @http.route('/my/quotes/create', type='http', auth="user", website=True)
     def sale_order_create(self, **post):
         if post.get('pricelist_id'):
@@ -29,6 +36,6 @@ class CustomerPortal(CustomerPortal):
             'pricelists':request.env['product.pricelist'].search([]),
             'partner_ids':request.env['res.partner'].search([]),
             'order_lines':request.env['sale.order.line'].search([]),
-            'product_id':request.env['product.product'].search([]),
+            'product_ids':request.env['product.product'].search([]),
             'submitted': post.get('submitted', False)
         })
