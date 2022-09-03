@@ -11,3 +11,4 @@ class Partner(models.Model):
     portal_pricelists = fields.Many2many('product.pricelist', string='Sale Pricelist')
 
 # testing
+# testing 2
